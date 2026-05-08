@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+  ::selection {
+    background: rgba(200, 241, 53, 0.25);
+    color: #C8F135;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #080C12; }
+  ::-webkit-scrollbar-thumb { background: #2E3C50; border-radius: 2px; }
+  ::-webkit-scrollbar-thumb:hover { background: #C8F135; }
+}
+
+@layer components {
+  /* ── Glass card ── */
+  .card {
+    @apply bg-ink-800 border border-white/[0.06] rounded-2xl;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
+  }
+
+  /* ── Volt accent button ── */
+  .btn-volt {
+    @apply inline-flex items-center gap-2 bg-volt-500 text-ink-950 font-display font-semibold
+           text-sm px-5 py-2.5 rounded-xl transition-all duration-200
+           hover:bg-volt-400 hover:shadow-volt active:scale-95;
+  }
+
+  /* ── Ghost button ── */
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 border border-white/10 text-ash-300 font-display font-medium
+           text-sm px-5 py-2.5 rounded-xl transition-all duration-200
+           hover:border-volt-500/40 hover:text-volt-500 active:scale-95;
+  }
+
+  /* ── Section label ── */
+  .section-label {
+    @apply inline-flex items-center gap-2 text-xs font-mono text-volt-500
+           border border-volt-500/20 bg-volt-500/10 rounded-full px-3 py-1 tracking-widest uppercase;
+  }
+
+  /* ── Input ── */
+  .field {
+    @apply w-full bg-ink-700 border border-white/[0.08] rounded-xl px-4 py-3 text-ash-100
+           placeholder:text-ash-400 text-sm outline-none
+           focus:border-volt-500/50 focus:ring-1 focus:ring-volt-500/20
+           transition-all duration-200;
+  }
+
+  /* ── Tag chip ── */
+  .tag {
+    @apply text-xs font-mono text-ash-400 border border-white/[0.08] bg-ink-700
+           rounded-lg px-2.5 py-1 transition-colors hover:border-volt-500/30 hover:text-volt-500;
+  }
+
+  /* ── Animated underline link ── */
+  .nav-link {
+    @apply relative text-ash-300 text-sm font-medium transition-colors duration-200 hover:text-white;
+  }
+  .nav-link::after {
+    content: '';
+    @apply absolute -bottom-0.5 left-0 w-0 h-px bg-volt-500 transition-all duration-300;
+  }
+  .nav-link:hover::after, .nav-link.active::after { @apply w-full; }
+  .nav-link.active { @apply text-white; }
+
+  /* ── Stagger animation helpers ── */
+  .stagger > * { opacity: 0; }
+  .stagger.ready > *:nth-child(1) { animation: fadeUp 0.5s 0.05s ease forwards; }
+  .stagger.ready > *:nth-child(2) { animation: fadeUp 0.5s 0.15s ease forwards; }
+  .stagger.ready > *:nth-child(3) { animation: fadeUp 0.5s 0.25s ease forwards; }
+  .stagger.ready > *:nth-child(4) { animation: fadeUp 0.5s 0.35s ease forwards; }
+  .stagger.ready > *:nth-child(5) { animation: fadeUp 0.5s 0.45s ease forwards; }
+  .stagger.ready > *:nth-child(6) { animation: fadeUp 0.5s 0.55s ease forwards; }
+
+  /* ── Grid background ── */
+  .bg-grid {
+    background-image: linear-gradient(rgba(200,241,53,0.025) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(200,241,53,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* ── Status dot ── */
+  .status-dot {
+    @apply w-2 h-2 rounded-full bg-volt-500;
+    box-shadow: 0 0 0 3px rgba(200,241,53,0.2);
+    animation: pulse-dot 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%,100% { box-shadow: 0 0 0 3px rgba(200,241,53,0.2); }
+    50%      { box-shadow: 0 0 0 6px rgba(200,241,53,0.05); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
