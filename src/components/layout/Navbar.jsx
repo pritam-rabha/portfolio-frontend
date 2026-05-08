@@ -5,10 +5,10 @@ import { useAuth } from '../../context/AuthContext'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const NAV = [
-  { to: '/',         label: 'Home' },
-  { to: '/about',    label: 'About' },
+  { to: '/', label: 'Home' },
+  { to: '/about', label: 'About' },
   { to: '/projects', label: 'Projects' },
-  { to: '/contact',  label: 'Contact' },
+  { to: '/contact', label: 'Contact' },
 ]
 
 export default function Navbar() {
@@ -27,9 +27,8 @@ export default function Navbar() {
 
   return (
     <>
-      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? 'bg-ink-950/90 backdrop-blur-xl border-b border-white/[0.06]' : ''
-      }`}>
+      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-ink-950/90 backdrop-blur-xl border-b border-white/[0.06]' : ''
+        }`}>
         <div className="max-w-6xl mx-auto px-5 h-[68px] flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2.5 group">
@@ -106,10 +105,9 @@ export default function Navbar() {
                   end={to === '/'}
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
-                    `py-3 px-4 rounded-xl text-sm font-medium transition-all ${
-                      isActive
-                        ? 'bg-volt-500/10 text-volt-500'
-                        : 'text-ash-300 hover:bg-ink-700 hover:text-white'
+                    `py-3 px-4 rounded-xl text-sm font-medium transition-all ${isActive
+                      ? 'bg-volt-500/10 text-volt-500'
+                      : 'text-ash-300 hover:bg-ink-700 hover:text-white'
                     }`
                   }
                 >
@@ -117,22 +115,26 @@ export default function Navbar() {
                 </NavLink>
               ))}
               <div className="mt-3 pt-3 border-t border-white/[0.06]">
-                {user ? (
+                {user && (
                   <div className="flex gap-2">
-                    <Link to="/admin" onClick={() => setOpen(false)}
-                      className="btn-volt flex-1 justify-center text-xs py-2.5">
+                    <Link
+                      to="/admin"
+                      onClick={() => setOpen(false)}
+                      className="btn-volt flex-1 justify-center text-xs py-2.5"
+                    >
                       Dashboard
                     </Link>
-                    <button onClick={() => { handleLogout(); setOpen(false) }}
-                      className="btn-ghost px-4 py-2.5 text-xs">
+
+                    <button
+                      onClick={() => {
+                        handleLogout()
+                        setOpen(false)
+                      }}
+                      className="btn-ghost px-4 py-2.5 text-xs"
+                    >
                       <LogOut size={14} />
                     </button>
                   </div>
-                ) : (
-                  <Link to="/admin/login" onClick={() => setOpen(false)}
-                    className="btn-ghost w-full justify-center text-xs py-2.5">
-                    Admin Login
-                  </Link>
                 )}
               </div>
             </nav>
