@@ -130,7 +130,7 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="card p-7 space-y-4">
-                <p className="text-xs font-mono text-ash-500 tracking-widest mb-2">// new message</p>
+                <p className="text-xs font-mono text-ash-500 tracking-widest mb-2">New message</p>
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
