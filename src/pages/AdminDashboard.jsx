@@ -48,6 +48,26 @@ const EMPTY_PROJECT = {
   featured: false, badge: '', isPublished: true,
 }
 
+
+function Field({ label, name, type = 'text', placeholder, required, form, upd }) {
+  return (
+    <div>
+      <label className="text-xs text-ash-500 block mb-1.5">
+        {label}{required && ' *'}
+      </label>
+
+      <input
+        type={type}
+        value={form[name] || ''}
+        onChange={upd(name)}
+        required={required}
+        placeholder={placeholder}
+        className="field text-sm"
+      />
+    </div>
+  )
+}
+
 /* ─── Project Form Modal ─────────────────────────────────────────────────── */
 function ProjectForm({ onClose, onSaved, toast, editData = null }) {
   const isEdit = !!editData
@@ -72,14 +92,14 @@ function ProjectForm({ onClose, onSaved, toast, editData = null }) {
     } finally { setSaving(false) }
   }
 
-  function Field({ label, name, type = 'text', placeholder, required, form, upd }) {
-  return (
-    <div>
-      <label className="text-xs text-ash-500 block mb-1.5">{label}{required && ' *'}</label>
-      <input type={type} value={form[name] || ''} onChange={upd(name)} required={required} placeholder={placeholder} className="field text-sm" />
-    </div>
-  )
-}
+  // function Field({ label, name, type = 'text', placeholder, required, form, upd }) {
+  // return (
+  //   <div>
+  //     <label className="text-xs text-ash-500 block mb-1.5">{label}{required && ' *'}</label>
+  //     <input type={type} value={form[name] || ''} onChange={upd(name)} required={required} placeholder={placeholder} className="field text-sm" />
+  //   </div>
+  // )
+
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
