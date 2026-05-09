@@ -556,7 +556,7 @@ export default function AdminDashboard() {
                               {m.subject && <p className="text-xs text-ash-500 mb-2"><span className="text-ash-600 font-mono">subject: </span>{m.subject}</p>}
                               <p className="text-sm text-ash-300 leading-relaxed whitespace-pre-wrap mb-5">{m.message}</p>
                               <div className="border border-white/[0.08] rounded-xl p-4 bg-ink-800/50">
-                                <p className="text-xs font-mono text-ash-500 mb-3">// reply to {m.name} · {m.email}</p>
+                                <p className="text-xs font-mono text-ash-500 mb-3">Reply to {m.name} · {m.email}</p>
                                 <textarea value={replyText[m._id] || ''} onChange={e => setReplyText(r => ({ ...r, [m._id]: e.target.value }))}
                                   rows={4} placeholder="Write your reply here…" className="field resize-none text-sm w-full mb-3" />
                                 <div className="flex items-center gap-2">
