@@ -439,7 +439,7 @@ export default function AdminDashboard() {
                               {/* ── Reply box ── */}
                               <div className="border border-white/[0.08] rounded-xl p-4 bg-ink-800/50">
                                 <p className="text-xs font-mono text-ash-500 mb-3">
-                                  // reply to {m.name} · {m.email}
+                                  Reply to {m.name} · {m.email}
                                 </p>
                                 <textarea
                                   value={replyText[m._id] || ''}
