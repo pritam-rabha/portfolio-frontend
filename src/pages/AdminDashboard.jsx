@@ -72,12 +72,14 @@ function ProjectForm({ onClose, onSaved, toast, editData = null }) {
     } finally { setSaving(false) }
   }
 
-  const Field = ({ label, name, type = 'text', placeholder, required }) => (
+  function Field({ label, name, type = 'text', placeholder, required, form, upd }) {
+  return (
     <div>
       <label className="text-xs text-ash-500 block mb-1.5">{label}{required && ' *'}</label>
       <input type={type} value={form[name] || ''} onChange={upd(name)} required={required} placeholder={placeholder} className="field text-sm" />
     </div>
   )
+}
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
@@ -89,19 +91,19 @@ function ProjectForm({ onClose, onSaved, toast, editData = null }) {
           <button onClick={onClose} className="p-1.5 text-ash-500 hover:text-white rounded-lg transition-colors"><X size={16} /></button>
         </div>
         <form onSubmit={submit} className="p-6 space-y-4">
-          <Field label="Title" name="title" placeholder="Project name" required />
+          <Field label="Title" name="title" placeholder="Project name" required form={form} upd={upd} />
           <div>
             <label className="text-xs text-ash-500 block mb-1.5">Description *</label>
             <textarea value={form.description} onChange={upd('description')} required rows={3}
               placeholder="What does it do?" className="field text-sm resize-none" />
           </div>
-          <Field label="Tech stack (comma-separated)" name="techStack" placeholder="Python, TensorFlow, Arduino" required />
+         <Field label="Tech stack (comma-separated)" name="techStack" placeholder="Python, TensorFlow, Arduino" required form={form} upd={upd} />
           <div className="grid grid-cols-2 gap-3">
-            <Field label="GitHub URL" name="githubUrl" placeholder="https://github.com/…" />
-            <Field label="Live URL" name="liveUrl" placeholder="https://…" />
+            <Field label="GitHub URL" name="githubUrl" placeholder="https://github.com/…" form={form} upd={upd} />
+            <Field label="Live URL" name="liveUrl" placeholder="https://…" form={form} upd={upd} />
           </div>
-          <Field label="Badge text" name="badge" placeholder="1st Prize — MoE 2024" />
-          <Field label="Image URL" name="imageUrl" placeholder="https://…" />
+          <Field label="Badge text" name="badge" placeholder="1st Prize — MoE 2024" form={form} upd={upd} />
+          <Field label="Image URL" name="imageUrl" placeholder="https://…" form={form} upd={upd} />
           <div className="flex items-center gap-5">
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" checked={form.featured} onChange={upd('featured')}
