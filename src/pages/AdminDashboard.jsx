@@ -48,364 +48,79 @@ const EMPTY_PROJECT = {
   featured: false, badge: '', isPublished: true,
 }
 
-// /* ─── Project Form Modal ─────────────────────────────────────────────────── */
-// function ProjectForm({ onClose, onSaved, toast, editData = null }) {
-//   const isEdit = !!editData
-//   const [form, setForm] = useState(
-//     isEdit ? { ...editData, techStack: editData.techStack?.join(', ') || '' } : EMPTY_PROJECT
-//   )
-//   const [saving, setSaving] = useState(false)
-//   const upd = k => e => setForm(f => ({ ...f, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }))
+/* ─── Project Form Modal ─────────────────────────────────────────────────── */
+function ProjectForm({ onClose, onSaved, toast, editData = null }) {
+  const isEdit = !!editData
+  const [form, setForm] = useState(
+    isEdit ? { ...editData, techStack: editData.techStack?.join(', ') || '' } : EMPTY_PROJECT
+  )
+  const [saving, setSaving] = useState(false)
+  const upd = k => e => setForm(f => ({ ...f, [k]: e.target.type === 'checkbox' ? e.target.checked : e.target.value }))
 
-//   const submit = async e => {
-//     e.preventDefault()
-//     setSaving(true)
-//     try {
-//       const payload = { ...form, techStack: form.techStack.split(',').map(s => s.trim()).filter(Boolean) }
-//       if (isEdit) await updateProject(editData._id, payload)
-//       else await createProject(payload)
-//       toast.push(isEdit ? 'Project updated!' : 'Project created!')
-//       onSaved()
-//       onClose()
-//     } catch (err) {
-//       toast.push(err.response?.data?.message || 'Failed to save project.', 'error')
-//     } finally { setSaving(false) }
-//   }
+  const submit = async e => {
+    e.preventDefault()
+    setSaving(true)
+    try {
+      const payload = { ...form, techStack: form.techStack.split(',').map(s => s.trim()).filter(Boolean) }
+      if (isEdit) await updateProject(editData._id, payload)
+      else await createProject(payload)
+      toast.push(isEdit ? 'Project updated!' : 'Project created!')
+      onSaved()
+      onClose()
+    } catch (err) {
+      toast.push(err.response?.data?.message || 'Failed to save project.', 'error')
+    } finally { setSaving(false) }
+  }
 
-//   function Field({ label, name, type = 'text', placeholder, required, form, upd }) {
-//   return (
-//     <div>
-//       <label className="text-xs text-ash-500 block mb-1.5">{label}{required && ' *'}</label>
-//       <input type={type} value={form[name] || ''} onChange={upd(name)} required={required} placeholder={placeholder} className="field text-sm" />
-//     </div>
-//   )
-// }
-
-//   return (
-//     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-//       className="fixed inset-0 z-50 bg-ink-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-//       <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
-//         className="card w-full max-w-xl max-h-[90vh] overflow-y-auto">
-//         <div className="flex items-center justify-between p-6 border-b border-white/[0.06]">
-//           <h3 className="font-display font-semibold text-white">{isEdit ? 'Edit project' : 'New project'}</h3>
-//           <button onClick={onClose} className="p-1.5 text-ash-500 hover:text-white rounded-lg transition-colors"><X size={16} /></button>
-//         </div>
-//         <form onSubmit={submit} className="p-6 space-y-4">
-//           <Field label="Title" name="title" placeholder="Project name" required form={form} upd={upd} />
-//           <div>
-//             <label className="text-xs text-ash-500 block mb-1.5">Description *</label>
-//             <textarea value={form.description} onChange={upd('description')} required rows={3}
-//               placeholder="What does it do?" className="field text-sm resize-none" />
-//           </div>
-//          <Field label="Tech stack (comma-separated)" name="techStack" placeholder="Python, TensorFlow, Arduino" required form={form} upd={upd} />
-//           <div className="grid grid-cols-2 gap-3">
-//             <Field label="GitHub URL" name="githubUrl" placeholder="https://github.com/…" form={form} upd={upd} />
-//             <Field label="Live URL" name="liveUrl" placeholder="https://…" form={form} upd={upd} />
-//           </div>
-//           <Field label="Badge text" name="badge" placeholder="1st Prize — MoE 2024" form={form} upd={upd} />
-//           <Field label="Image URL" name="imageUrl" placeholder="https://…" form={form} upd={upd} />
-//           <div className="flex items-center gap-5">
-//             <label className="flex items-center gap-2 cursor-pointer">
-//               <input type="checkbox" checked={form.featured} onChange={upd('featured')}
-//                 className="w-4 h-4 rounded border-white/20 bg-ink-700 accent-volt-500" />
-//               <span className="text-sm text-ash-300">Featured</span>
-//             </label>
-//             <label className="flex items-center gap-2 cursor-pointer">
-//               <input type="checkbox" checked={form.isPublished} onChange={upd('isPublished')}
-//                 className="w-4 h-4 rounded border-white/20 bg-ink-700 accent-volt-500" />
-//               <span className="text-sm text-ash-300">Published</span>
-//             </label>
-//           </div>
-//           <div className="flex gap-3 pt-2">
-//             <button type="button" onClick={onClose} className="btn-ghost flex-1 justify-center text-sm">Cancel</button>
-//             <button type="submit" disabled={saving} className="btn-volt flex-1 justify-center text-sm">
-//               {saving ? <Loader2 size={14} className="animate-spin" /> : isEdit ? <Pencil size={14} /> : <Plus size={14} />}
-//               {saving ? 'Saving…' : isEdit ? 'Update' : 'Create'}
-//             </button>
-//           </div>
-//         </form>
-//       </motion.div>
-//     </motion.div>
-//   )
-// }
-
-
-
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { X, Plus, Pencil, Loader2 } from 'lucide-react'
-
-/* ─── Empty Project ───────────────────────────────────────────────────────── */
-const EMPTY_PROJECT = {
-  title: '',
-  description: '',
-  techStack: '',
-  githubUrl: '',
-  liveUrl: '',
-  badge: '',
-  imageUrl: '',
-  featured: false,
-  isPublished: true
-}
-
-/* ─── Reusable Field Component ───────────────────────────────────────────── */
-function Field({
-  label,
-  name,
-  type = 'text',
-  placeholder,
-  required,
-  form,
-  upd
-}) {
+  function Field({ label, name, type = 'text', placeholder, required, form, upd }) {
   return (
     <div>
-      <label className="text-xs text-ash-500 block mb-1.5">
-        {label}
-        {required && ' *'}
-      </label>
-
-      <input
-        type={type}
-        value={form[name] || ''}
-        onChange={upd(name)}
-        required={required}
-        placeholder={placeholder}
-        className="field text-sm"
-      />
+      <label className="text-xs text-ash-500 block mb-1.5">{label}{required && ' *'}</label>
+      <input type={type} value={form[name] || ''} onChange={upd(name)} required={required} placeholder={placeholder} className="field text-sm" />
     </div>
   )
 }
 
-/* ─── Project Form Modal ─────────────────────────────────────────────────── */
-function ProjectForm({
-  onClose,
-  onSaved,
-  toast,
-  editData = null,
-  createProject,
-  updateProject
-}) {
-  const isEdit = !!editData
-
-  const [form, setForm] = useState(
-    isEdit
-      ? {
-          ...editData,
-          techStack: editData.techStack?.join(', ') || ''
-        }
-      : EMPTY_PROJECT
-  )
-
-  const [saving, setSaving] = useState(false)
-
-  const upd = key => e => {
-    const value =
-      e.target.type === 'checkbox'
-        ? e.target.checked
-        : e.target.value
-
-    setForm(prev => ({
-      ...prev,
-      [key]: value
-    }))
-  }
-
-  const submit = async e => {
-    e.preventDefault()
-
-    setSaving(true)
-
-    try {
-      const payload = {
-        ...form,
-        techStack: form.techStack
-          .split(',')
-          .map(s => s.trim())
-          .filter(Boolean)
-      }
-
-      if (isEdit) {
-        await updateProject(editData._id, payload)
-      } else {
-        await createProject(payload)
-      }
-
-      toast.push(
-        isEdit ? 'Project updated!' : 'Project created!'
-      )
-
-      onSaved()
-      onClose()
-    } catch (err) {
-      toast.push(
-        err.response?.data?.message ||
-          'Failed to save project.',
-        'error'
-      )
-    } finally {
-      setSaving(false)
-    }
-  }
-
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-ink-950/80 backdrop-blur-sm flex items-center justify-center p-4"
-    >
-      <motion.div
-        initial={{ scale: 0.95, y: 20 }}
-        animate={{ scale: 1, y: 0 }}
-        exit={{ scale: 0.95, y: 20 }}
-        className="card w-full max-w-xl max-h-[90vh] overflow-y-auto"
-      >
-        {/* Header */}
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 bg-ink-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
+        className="card w-full max-w-xl max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between p-6 border-b border-white/[0.06]">
-          <h3 className="font-display font-semibold text-white">
-            {isEdit ? 'Edit project' : 'New project'}
-          </h3>
-
-          <button
-            onClick={onClose}
-            className="p-1.5 text-ash-500 hover:text-white rounded-lg transition-colors"
-          >
-            <X size={16} />
-          </button>
+          <h3 className="font-display font-semibold text-white">{isEdit ? 'Edit project' : 'New project'}</h3>
+          <button onClick={onClose} className="p-1.5 text-ash-500 hover:text-white rounded-lg transition-colors"><X size={16} /></button>
         </div>
-
-        {/* Form */}
         <form onSubmit={submit} className="p-6 space-y-4">
-          <Field
-            label="Title"
-            name="title"
-            placeholder="Project name"
-            required
-            form={form}
-            upd={upd}
-          />
-
-          {/* Description */}
+          <Field label="Title" name="title" placeholder="Project name" required form={form} upd={upd} />
           <div>
-            <label className="text-xs text-ash-500 block mb-1.5">
-              Description *
-            </label>
-
-            <textarea
-              value={form.description}
-              onChange={upd('description')}
-              required
-              rows={3}
-              placeholder="What does it do?"
-              className="field text-sm resize-none"
-            />
+            <label className="text-xs text-ash-500 block mb-1.5">Description *</label>
+            <textarea value={form.description} onChange={upd('description')} required rows={3}
+              placeholder="What does it do?" className="field text-sm resize-none" />
           </div>
-
-          <Field
-            label="Tech stack (comma-separated)"
-            name="techStack"
-            placeholder="Python, TensorFlow, Arduino"
-            required
-            form={form}
-            upd={upd}
-          />
-
-          {/* URLs */}
+         <Field label="Tech stack (comma-separated)" name="techStack" placeholder="Python, TensorFlow, Arduino" required form={form} upd={upd} />
           <div className="grid grid-cols-2 gap-3">
-            <Field
-              label="GitHub URL"
-              name="githubUrl"
-              placeholder="https://github.com/..."
-              form={form}
-              upd={upd}
-            />
-
-            <Field
-              label="Live URL"
-              name="liveUrl"
-              placeholder="https://..."
-              form={form}
-              upd={upd}
-            />
+            <Field label="GitHub URL" name="githubUrl" placeholder="https://github.com/…" form={form} upd={upd} />
+            <Field label="Live URL" name="liveUrl" placeholder="https://…" form={form} upd={upd} />
           </div>
-
-          <Field
-            label="Badge text"
-            name="badge"
-            placeholder="1st Prize — MoE 2024"
-            form={form}
-            upd={upd}
-          />
-
-          <Field
-            label="Image URL"
-            name="imageUrl"
-            placeholder="https://..."
-            form={form}
-            upd={upd}
-          />
-
-          {/* Checkboxes */}
+          <Field label="Badge text" name="badge" placeholder="1st Prize — MoE 2024" form={form} upd={upd} />
+          <Field label="Image URL" name="imageUrl" placeholder="https://…" form={form} upd={upd} />
           <div className="flex items-center gap-5">
             <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={form.featured}
-                onChange={upd('featured')}
-                className="w-4 h-4 rounded border-white/20 bg-ink-700 accent-volt-500"
-              />
-
-              <span className="text-sm text-ash-300">
-                Featured
-              </span>
+              <input type="checkbox" checked={form.featured} onChange={upd('featured')}
+                className="w-4 h-4 rounded border-white/20 bg-ink-700 accent-volt-500" />
+              <span className="text-sm text-ash-300">Featured</span>
             </label>
-
             <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={form.isPublished}
-                onChange={upd('isPublished')}
-                className="w-4 h-4 rounded border-white/20 bg-ink-700 accent-volt-500"
-              />
-
-              <span className="text-sm text-ash-300">
-                Published
-              </span>
+              <input type="checkbox" checked={form.isPublished} onChange={upd('isPublished')}
+                className="w-4 h-4 rounded border-white/20 bg-ink-700 accent-volt-500" />
+              <span className="text-sm text-ash-300">Published</span>
             </label>
           </div>
-
-          {/* Buttons */}
           <div className="flex gap-3 pt-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn-ghost flex-1 justify-center text-sm"
-            >
-              Cancel
-            </button>
-
-            <button
-              type="submit"
-              disabled={saving}
-              className="btn-volt flex-1 justify-center text-sm flex items-center gap-2"
-            >
-              {saving ? (
-                <Loader2
-                  size={14}
-                  className="animate-spin"
-                />
-              ) : isEdit ? (
-                <Pencil size={14} />
-              ) : (
-                <Plus size={14} />
-              )}
-
-              {saving
-                ? 'Saving...'
-                : isEdit
-                ? 'Update'
-                : 'Create'}
+            <button type="button" onClick={onClose} className="btn-ghost flex-1 justify-center text-sm">Cancel</button>
+            <button type="submit" disabled={saving} className="btn-volt flex-1 justify-center text-sm">
+              {saving ? <Loader2 size={14} className="animate-spin" /> : isEdit ? <Pencil size={14} /> : <Plus size={14} />}
+              {saving ? 'Saving…' : isEdit ? 'Update' : 'Create'}
             </button>
           </div>
         </form>
@@ -414,7 +129,7 @@ function ProjectForm({
   )
 }
 
-export default ProjectForm
+
 
 
 
