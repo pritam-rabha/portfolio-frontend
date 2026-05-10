@@ -5,9 +5,9 @@ import PageLayout from '../components/layout/PageLayout'
 import { submitContact } from '../services/api'
 
 const SOCIALS = [
-  { icon: Github,   href: 'https://github.com/pritamrabha',      label: 'GitHub' },
+  { icon: Github,   href: 'https://github.com/pritam-rabha',      label: 'GitHub' },
   { icon: Linkedin, href: 'https://linkedin.com/in/pritamrabha',  label: 'LinkedIn' },
-  { icon: Twitter,  href: 'https://twitter.com/pritamrabha',     label: 'Twitter' },
+  { icon: Twitter,  href: 'https://twitter.com/pritam__rabha',     label: 'Twitter' },
   { icon: Mail,     href: 'mailto:pritamrba@gmail.com',           label: 'Email' },
 ]
 
