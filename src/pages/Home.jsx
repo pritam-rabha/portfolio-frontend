@@ -106,11 +106,22 @@ export default function Home() {
             <Link to="/contact" className="btn-ghost">
               Get in touch
             </Link>
-            <a href="https://res.cloudinary.com/denyjxhia/raw/upload/v1778412151/yvqywwfhascli8gannmo.pdf" target="_blank" rel="noopener noreferrer"
+            {/* <a href="https://res.cloudinary.com/denyjxhia/raw/upload/v1778412151/yvqywwfhascli8gannmo.pdf" target="_blank" rel="noopener noreferrer"
                className="flex items-center gap-2 text-ash-400 hover:text-volt-400
                           text-sm font-medium transition-colors ml-1">
               <Download size={14} /> Resume
-            </a>
+            </a> */}
+            <a
+    href="https://res.cloudinary.com/denyjxhia/image/upload/resume.pdf"
+  target="_blank"
+  rel="noopener noreferrer"
+  download
+  className="flex items-center gap-2 text-ash-400 hover:text-volt-400
+             text-sm font-medium transition-colors ml-1"
+>
+  <Download size={14} />
+  Resume
+</a>
           </motion.div>
 
           {/* Stats row */}
