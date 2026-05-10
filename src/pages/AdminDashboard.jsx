@@ -173,7 +173,7 @@ function ResumeTab({ toast }) {
       formData.append('upload_preset', preset)
       formData.append('public_id', 'resume')
 
-      const res  = await fetch(`https://api.cloudinary.com/v1_1/denyjxhia/auto/upload`, { method: 'POST', body: formData })
+      const res  = await fetch(`https://api.cloudinary.com/v1_1/denyjxhia/image/upload`, { method: 'POST', body: formData })
       const data = await res.json()
 
       if (data.secure_url) {
