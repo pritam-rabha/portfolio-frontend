@@ -166,15 +166,13 @@ function ResumeTab({ toast }) {
 
     setUploading(true)
     try {
-      const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
-      const preset    = import.meta.env.VITE_CLOUDINARY_PRESET || 'portfolio_resume'
-      if (!cloudName) { toast.push('Add VITE_CLOUDINARY_CLOUD_NAME to Vercel env vars.', 'error'); setUploading(false); return }
-
+      const cloudName = 'denyjxhia'
+      const preset    = 'portfolio_resume'
       const formData = new FormData()
       formData.append('file', file)
       formData.append('upload_preset', preset)
 
-      const res  = await fetch('https://api.cloudinary.com/v1_1/${cloudName}/auto/upload', { method: 'POST', body: formData })
+      const res  = await fetch(`https://api.cloudinary.com/v1_1/denyjxhia/auto/upload`, { method: 'POST', body: formData })
       const data = await res.json()
 
       if (data.secure_url) {
