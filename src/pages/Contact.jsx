@@ -57,7 +57,7 @@ export default function Contact() {
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-10">
-          {/* ── Left info panel ──────────────────────────────────────────── */}
+          {/* ── Left info panel ─────────*/}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
