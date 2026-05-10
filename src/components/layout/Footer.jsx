@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom'
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react'
 
 const socials = [
-  { icon: Github,   href: 'https://github.com/pritamrabha',     label: 'GitHub' },
-  { icon: Linkedin, href: 'https://linkedin.com/in/pritamrabha', label: 'LinkedIn' },
-  { icon: Twitter,  href: 'https://twitter.com/pritamrabha',    label: 'Twitter' },
-  { icon: Mail,     href: 'mailto:pritamrba@gmail.com',          label: 'Email' },
+ { icon: Github,   href: 'https://github.com/pritam-rabha',      label: 'GitHub' },
+  { icon: Linkedin, href: 'https://linkedin.com/in/pritamrabha',  label: 'LinkedIn' },
+  { icon: Twitter,  href: 'https://twitter.com/pritam__rabha',     label: 'Twitter' },
+  { icon: Mail,     href: 'mailto:pritamrba@gmail.com',           label: 'Email' },
 ]
 
 export default function Footer() {
