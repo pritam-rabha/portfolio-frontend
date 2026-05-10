@@ -89,7 +89,7 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.22 }}
             className="mt-6 text-ash-400 text-lg max-w-xl leading-relaxed"
           >
-            I'm Pritam — an AI & Robotics developer and MCA student turning research
+            I'm Pritam Rabha, an AI & Robotics developer and MCA student turning research
             into real-world impact, from autonomous drones to computer vision pipelines.
           </motion.p>
 
