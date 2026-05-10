@@ -172,7 +172,6 @@ function ResumeTab({ toast }) {
       formData.append('file', file)
       formData.append('upload_preset', preset)
       formData.append('public_id', 'resume')
-      formData.append('overwrite', 'true')
 
       const res  = await fetch(`https://api.cloudinary.com/v1_1/denyjxhia/auto/upload`, { method: 'POST', body: formData })
       const data = await res.json()
